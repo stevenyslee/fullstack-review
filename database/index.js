@@ -3,7 +3,7 @@ mongoose.connect('mongodb://localhost/fetcher');
 
 let repoSchema = mongoose.Schema({
 	user: String,
-	repo: String.
+	repo: String,
 	stars: Number
 });
 
@@ -18,11 +18,16 @@ let save = (user, repo, stars) => {
 
 	doc.save(function(err, doc) {
 		if (err) return console.error(err);
-		console.log(doc);
+		console.log('Success saving: ', doc);
 	});
-	// TODO: Your code here
-	// This function should save a repo or repos to
-	// the MongoDB
+}
+
+let find = () => {
+	Repo.find(function (err, doc) {
+	  if (err) return console.error(err);
+	  console.log('Find produced: ', doc);
+	})
 }
 
 module.exports.save = save;
+module.exports.find = find;
