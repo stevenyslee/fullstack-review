@@ -15,7 +15,7 @@ class App extends React.Component {
 
   search (term) {
     console.log(`${term} was searched`);
-    var jqxhr = $.post( "http://localhost:1128/repos", {'username': term}, function(data) {
+    var jqxhr = $.post( "http://localhost:1128/repos", {'username': term}, (data) => {
       console.log(data);
     })
     .fail(function() {
@@ -27,6 +27,9 @@ class App extends React.Component {
     var jqxhr = $.get( "http://localhost:1128/repos", (data) => {
       this.setState({
         repos: data
+      });
+      this.state.repos.forEach(function(element){
+        $('#RepoList').append(`<div>${element.repo}</div>`);
       });
     })
     .fail(function() {
