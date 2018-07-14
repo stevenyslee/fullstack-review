@@ -10,12 +10,28 @@ class App extends React.Component {
     this.state = { 
       repos: []
     }
-
+    // this.componentDidMount = this.componentDidMount.bind(this);
   }
 
   search (term) {
     console.log(`${term} was searched`);
-    // TODO
+    var jqxhr = $.post( "http://localhost:1128/repos", {'username': term}, function(data) {
+      console.log(data);
+    })
+    .fail(function() {
+      console.log( "error" );
+    });
+  }
+
+  componentDidMount() {
+    var jqxhr = $.get( "http://localhost:1128/repos", (data) => {
+      this.setState({
+        repos: data
+      });
+    })
+    .fail(function() {
+      console.log( "error" );
+    });
   }
 
   render () {

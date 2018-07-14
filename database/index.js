@@ -17,16 +17,38 @@ let save = (user, repo, stars) => {
 	});
 	doc.save(function(err, doc) {
 		if (err) return console.error(err);
-		console.log('Success saving: ', doc);
 	});
 }
 
-let find = (username) => {
-	Repo.find({user: 'request'}, function (err, doc) {
-	  if (err) return console.error(err);
-	  console.log('Find produced: ', doc);
-		// Repo.collection.remove({});
-	}).limit(25).sort({ stars: 'desc'});
+let find = (username, callback, res) => {
+	if (username) {
+		Repo.find({user: username}, function (err, doc) {
+		  if (err) {
+		  	return console.error(err);
+		  } else {
+				if (doc.length > 0) {
+					// console.log(doc.length);
+					// Repo.collection.remove({});
+					res.send('User already exists');
+				} else {
+					console.log('find username: ', username);
+		  			callback(username, save);
+		  			res.send();
+				}
+		  }
+		}).limit(25).sort({ stars: 'desc'});
+	} else {
+		Repo.find({}, function (err, doc) {
+		  if (err) {
+		  	return console.error(err);
+		  } else {
+				if (doc.length > 0) {
+					console.log('find all');
+					res.send(doc);
+				}
+		  }
+		}).limit(25).sort({ stars: 'desc'});
+	}
 }
 
 
