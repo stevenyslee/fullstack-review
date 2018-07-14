@@ -15,19 +15,21 @@ let save = (user, repo, stars) => {
 		'repo': repo,
 		'stars': stars
 	});
-
 	doc.save(function(err, doc) {
 		if (err) return console.error(err);
 		console.log('Success saving: ', doc);
 	});
 }
 
-let find = () => {
-	Repo.find(function (err, doc) {
+let find = (username) => {
+	Repo.find({user: 'request'}, function (err, doc) {
 	  if (err) return console.error(err);
 	  console.log('Find produced: ', doc);
-	})
+		// Repo.collection.remove({});
+	}).limit(25).sort({ stars: 'desc'});
 }
+
+
 
 module.exports.save = save;
 module.exports.find = find;

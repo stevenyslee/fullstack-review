@@ -7,6 +7,9 @@ let getReposByUsername = (username, save, find) => {
 
   // The options object has been provided to help you out, 
   // but you'll have to fill in the URL
+
+  // find(username);
+
   let options = {
     url: `https://api.github.com/users/${username}/repos`,
     headers: {
@@ -24,7 +27,7 @@ let getReposByUsername = (username, save, find) => {
       find();
     }
   }
- 
+
   request(options, callback);
 
 }
